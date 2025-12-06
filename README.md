@@ -54,3 +54,82 @@ For this analysis, we used the [crowdflower dataset](https://data.world/crowdflo
 - Negative tweets cluster around 20 - 80 characters, indicating brief and direct texts reflecting frustration or immediate reactions.
 - Neutral tweets have a broader range. They are likely to be informational or descriptive texts that stick to the facts rather than conveying emotion.
 
+## 5. Modeling
+### 5.1 Logistic Regression Classifier
+A multiclass logistic regression classifier was built to classify tweets as either positive, negative or neutral based on the vectorized text, tweet length and word count. The data was split into a training and test set where 80% of the data was set aside for training the model. A gridsearch was used for hyperparameter tuning to achieve the best performing model.
+#### Parameters for Best Performing Logistic Regression Classifier
+- **C**: 5
+- **penalty**: l2
+
+#### Model Performance on Test Data
+<br>
+<p align="left">
+  <img src="cnf_matrix_log_reg.png" width="600" height="400">
+</p>
+
+The Logistic Regression Classifier achieved a test accuracy of 65%.
+| Class | Precision | Recall | F1-Score |
+|-------|-----------|--------|----------|
+|`positive`| 0.57 | 0.60 | 0.59 |
+|`negative`| 0.33 | 0.51 | 0.40 |
+|`neutral`| 0.76 | 0.70 | 0.73 |
+
+### 5.2 Random Forest Classifier
+A random forest classifier was built to analyse the same features and classify the tweets into one f the three classes. In this case, the sentiment labels were converted to numbers using a label encoder since a random forest model can only work with numerical data.<br>
+negative -> 0 <br>
+neutral -> 1 <br>
+positive -> 2 <br>
+#### Parameters for the Random Forest Classifier
+- **n_estimators**: 200
+- **class_weight**: balanced
+
+#### Model Performance on Test Data
+<br>
+<p align="left">
+  <img src="cnf_matrix_rf.png" width="600" height="400">
+</p>
+
+The Random Forest Classifier achieved a test accuracy of 67%.
+| Class | Precision | Recall | F1-Score |
+|-------|-----------|--------|----------|
+|`positive`| 0.62 | 0.42 | 0.50 |
+|`negative`| 0.58 | 0.19 | 0.29 |
+|`neutral`| 0.69 | 0.86 | 0.77 |
+
+### 5.3 Support Vector Machine (SVM) Classifier
+Similarly, the sentiment labels were also converted to numbers since the SVM classifier can only work with numerical data.
+
+#### Model Performance on Test Data
+<br>
+<p align="left">
+  <img src="cnf_matrix_svm.png" width="600" height="400">
+</p>
+
+The Random Forest Classifier achieved a test accuracy of 64%.
+| Class | Precision | Recall | F1-Score |
+|-------|-----------|--------|----------|
+|`positive`| 0.57 | 0.60 | 0.59 |
+|`negative`| 0.31 | 0.54 | 0.40 |
+|`neutral`| 0.76 | 0.68 | 0.72 |
+
+### 5.4 XGBoost Classifier
+For this model, the sentiment labels were also converted to numbers.
+#### Parameters for the XGBoost Classifier
+- **n_estimators**: 200
+- **max_depth**: 6
+- **learning_rate**: 0.1
+
+#### Model Performance on Test Data
+<br>
+<p align="left">
+  <img src="cnf_matrix_xgboost.png" width="600" height="400">
+</p>
+
+The Random Forest Classifier achieved a test accuracy of 67%.
+| Class | Precision | Recall | F1-Score |
+|-------|-----------|--------|----------|
+|`positive`| 0.63 | 0.37 | 0.47 |
+|`negative`| 0.58 | 0.10 | 0.17 |
+|`neutral`| 0.68 | 0.89 | 0.77 |
+
+## 6. Model Evaluation and Interpretation
